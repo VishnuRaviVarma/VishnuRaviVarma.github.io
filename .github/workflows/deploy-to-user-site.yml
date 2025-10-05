@@ -1,0 +1,61 @@
+name: Build and publish to user site repo
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Prepare and push to user site repo
+        env:
+          DEPLOY_TOKEN: ${{ secrets.GH_PAGES_DEPLOY_TOKEN }}
+          TARGET_REPO: 'VishnuRaviVarma/vishnuravivarma.github.io'  # change if different
+          TARGET_BRANCH: 'main' # or 'gh-pages' if you prefer
+        run: |
+          set -e
+
+          # Clone target repo into temp folder using the PAT
+          git clone https://x-access-token:${DEPLOY_TOKEN}@github.com/${TARGET_REPO}.git target_repo
+          cd target_repo
+
+          # Create a timestamped backup branch from current TARGET_BRANCH
+          git checkout ${TARGET_BRANCH} || git checkout --orphan ${TARGET_BRANCH}
+          BACKUP_BRANCH="backup-before-deploy-$(date +'%Y%m%d-%H%M%S')"
+          git branch -m ${BACKUP_BRANCH}
+          git push origin ${BACKUP_BRANCH} || true
+
+          # Remove all files from the checked-out branch (preserve .git folder)
+          git rm -rf . || true
+          # Copy the new build into the target repo
+          cp -a ../dist/. .
+
+          # If you have a CNAME file to keep, copy it back here before commit
+          # cp ../path/to/CNAME ./CNAME || true
+
+          # Commit and push the new content to TARGET_BRANCH
+          git add -A
+          git commit -m "chore: publish build from vishnu-folio-nexus @${GITHUB_SHA}" || echo "Nothing to commit"
+          git push origin HEAD:${TARGET_BRANCH} --force
