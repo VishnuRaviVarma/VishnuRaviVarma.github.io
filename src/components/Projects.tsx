@@ -9,54 +9,36 @@ const Projects = () => {
 
   const projects = [
     {
-      title: 'Azure Cloud Migration Suite',
+      title: 'Azure Storage Backup Solution',
       description:
-        'Comprehensive toolset for migrating enterprise applications to Azure, featuring automated resource provisioning and monitoring.',
+        'Windows App to automate backup of local files into Azure Storage using C# and Azure SDK.',
       category: 'professional',
-      tags: ['Azure', 'PowerShell', 'Terraform'],
+      tags: ['Azure', 'PowerShell', 'C#', 'Azure SDK'],
       github: '#',
       demo: '#',
     },
-    {
-      title: 'Kubernetes Auto-Scaler',
-      description:
-        'Custom Kubernetes operator for intelligent workload scaling based on custom metrics and business rules.',
-      category: 'professional',
-      tags: ['Kubernetes', 'Golang', 'Docker'],
-      github: '#',
-      demo: '#',
-    },
-    {
-      title: 'DevOps Dashboard',
-      description:
-        'Real-time monitoring dashboard for CI/CD pipelines with integrated alerting and analytics.',
-      category: 'professional',
-      tags: ['Python', 'React', 'Docker'],
-      github: '#',
-      demo: '#',
-    },
+    
     {
       title: 'Personal Cloud Lab',
       description:
         'Home lab environment for testing cloud technologies and experimenting with new tools.',
       category: 'hobby',
-      tags: ['Proxmox', 'Docker', 'Kubernetes'],
+      tags: ['Raspberry Pi', 'Docker', 'Kubernetes',''],
+    },
+    {
+      title: 'Simple Data Ingestion Pipeline',
+      description:
+        'A data ingestion pipeline using Kafka and Cassandra for real-time data processing.',
+      category: 'hobby',
+      tags: ['Kafka', 'Cassandra', 'Python'],
       github: '#',
     },
     {
-      title: 'CLI Tool Collection',
+      title: 'Scalable Application Deployment Projects',
       description:
-        'Custom command-line utilities to streamline daily development and DevOps tasks.',
+        'Collection of projects to explore networking at scale using python , google cloud and terraform',
       category: 'hobby',
-      tags: ['Golang', 'Python', 'Bash'],
-      github: '#',
-    },
-    {
-      title: 'Infrastructure Automation Scripts',
-      description:
-        'Collection of scripts for automating common infrastructure management tasks.',
-      category: 'hobby',
-      tags: ['Python', 'PowerShell', 'Ansible'],
+      tags: ['Python', 'GCP', 'Terraform' , 'Kubernetes'],
       github: '#',
     },
   ];
